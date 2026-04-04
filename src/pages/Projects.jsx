@@ -34,79 +34,120 @@ const projectsData = [
     }
 ];
 
-function SpiderWebText({ text }) {
+const runeSymbols = ['⚝', '◈', '✶', '⎈', '⬡', '☽', '⟡', '✧', '⊛', '⌬'];
+
+function WandMagic({ active }) {
+    if (!active) return null;
+
     return (
-        <div className="spider-web-text-wrapper">
-            <div className="web-line web-line-1"></div>
-            <div className="web-line web-line-2"></div>
-            <div className="web-line web-line-3"></div>
-            <div className="web-line web-line-4"></div>
-            <div className="web-text-glow">{text}</div>
+        <div className="wand-magic-container">
+            {/* Arcane runes that fly out spinning */}
+            {[...Array(10)].map((_, i) => {
+                const angle = (i / 10) * Math.PI * 2 + (Math.random() - 0.5) * 0.6;
+                const dist = 120 + Math.random() * 200;
+                return (
+                    <div
+                        key={`rune-${i}`}
+                        className="arcane-rune"
+                        style={{
+                            '--rx': `${Math.cos(angle) * dist}px`,
+                            '--ry': `${Math.sin(angle) * dist}px`,
+                            '--spin': `${360 + Math.random() * 720}deg`,
+                            animationDelay: `${i * 0.06}s`,
+                        }}
+                    >
+                        {runeSymbols[i]}
+                    </div>
+                );
+            })}
+
+            {/* Golden embers that drift upward */}
+            {[...Array(20)].map((_, i) => {
+                const spread = (Math.random() - 0.5) * 300;
+                const rise = -(100 + Math.random() * 250);
+                return (
+                    <div
+                        key={`ember-${i}`}
+                        className="golden-ember"
+                        style={{
+                            '--ex': `${spread}px`,
+                            '--ey': `${rise}px`,
+                            animationDelay: `${Math.random() * 0.5}s`,
+                            animationDuration: `${1.2 + Math.random() * 0.8}s`,
+                        }}
+                    />
+                );
+            })}
+
+            {/* Light arc trail */}
+            <div className="spell-arc"></div>
         </div>
     );
 }
 
-export default function Projects() {
+export default function Projects({ onComplete }) {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [chainState, setChainState] = useState('chained'); // 'form', 'chained', 'shatter', 'unleashed'
-    const [isTransitioning, setIsTransitioning] = useState(false);
+    const [wandState, setWandState] = useState('ready');
+    const [isCasting, setIsCasting] = useState(false);
+    const [sparkKey, setSparkKey] = useState(0);
+    const [seenProjects, setSeenProjects] = useState(new Set());
 
     const handleClick = () => {
-        if (isTransitioning) return;
+        if (isCasting) return;
 
-        if (chainState === 'chained' || chainState === 'form') {
-            if (chainState === 'form') return; // Hard block if still forming
+        if (wandState === 'ready') {
+            setIsCasting(true);
+            setWandState('casting');
+            setSparkKey(prev => prev + 1);
 
-            // Shatter the chains!
-            setIsTransitioning(true);
-            setChainState('shatter');
             setTimeout(() => {
-                setChainState('unleashed');
-                setIsTransitioning(false);
-            }, 1000);
-        } else if (chainState === 'unleashed') {
-            // Swap to next project
-            setIsTransitioning(true);
-            setChainState('form');
+                setWandState('revealed');
+                setSeenProjects(prev => {
+                    const updated = new Set(prev);
+                    updated.add(currentIndex);
+                    if (updated.size === projectsData.length && onComplete) onComplete();
+                    return updated;
+                });
+                setIsCasting(false);
+            }, 1200);
+        } else if (wandState === 'revealed') {
+            setIsCasting(true);
+            setWandState('dismiss');
 
             setTimeout(() => {
                 setCurrentIndex((prev) => (prev + 1) % projectsData.length);
-            }, 300);
-
-            setTimeout(() => {
-                setChainState('chained');
-                setIsTransitioning(false);
-            }, 600);
+                setWandState('ready');
+                setIsCasting(false);
+            }, 800);
         }
     };
 
     const project = projectsData[currentIndex];
-    const isCardUnleashed = chainState === 'shatter' || chainState === 'unleashed';
+    const isRevealed = wandState === 'revealed';
 
     return (
         <div className="project-page-container" onClick={handleClick}>
 
-            {/* Header Area */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1rem', marginTop: '1rem' }}>
-                <SpiderWebText text={chainState === 'unleashed' ? "CLICK TO BIND NEXT ARTIFACT" : "CLICK TO UNLEASH ARTIFACT"} />
+                <div className="wand-instruction">
+                    {isRevealed ? '✦ CLICK TO CONJURE NEXT ARTIFACT ✦' : '✦ CLICK TO CAST THE SPELL ✦'}
+                </div>
             </div>
 
-            {/* Massive Main Content Area */}
             <div style={{ flex: 1, position: 'relative', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
-                {/* The Chain Overlay */}
-                {(chainState === 'form' || chainState === 'chained' || chainState === 'shatter') && (
-                    <div className={`chain-container ${chainState}`}>
-                        <div className="chain-left"></div>
-                        <div className="chain-right"></div>
-                        <div className="padlock">
-                            <div className="padlock-keyhole"></div>
-                        </div>
+                {/* Magic Wand */}
+                <div className={`wand-wrapper ${wandState}`}>
+                    <div className="magic-wand">
+                        <div className="wand-handle"></div>
+                        <div className="wand-shaft"></div>
+                        <div className="wand-tip">✦</div>
                     </div>
-                )}
+                    <WandMagic key={sparkKey} active={wandState === 'casting'} />
+                </div>
 
-                {/* The Bound Project Card */}
-                <div className={`chained-project-card ${isCardUnleashed ? 'unleashed' : ''}`}>
+                {/* Project Card */}
+                <div className={`project-card-magic ${isRevealed ? 'revealed' : ''} ${wandState === 'dismiss' ? 'dismissing' : ''}`}>
                     <div className="project-title-xl">{project.name}</div>
                     <div className="project-desc-xl">{project.description}</div>
 
@@ -116,7 +157,7 @@ export default function Projects() {
                         rel="noopener noreferrer"
                         className="project-btn-glow"
                         onClick={(e) => {
-                            if (!isCardUnleashed) {
+                            if (!isRevealed) {
                                 e.preventDefault();
                             } else {
                                 e.stopPropagation();
@@ -125,14 +166,12 @@ export default function Projects() {
                     >
                         Inspect Repository
                     </a>
-
                 </div>
             </div>
 
             <div style={{ textAlign: 'center', color: 'var(--color-accent-gold-dim)', fontStyle: 'italic', letterSpacing: '4px', fontSize: '0.75rem', marginTop: '1.5rem', marginBottom: '0.5rem' }}>
                 ARTIFACT {currentIndex + 1} OF {projectsData.length}
             </div>
-
         </div>
     );
 }

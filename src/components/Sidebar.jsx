@@ -3,9 +3,9 @@ import { Sparkles, FileText, FolderOpen, Star, Mail, Layout } from 'lucide-react
 
 const navItems = [
     { id: 'intro', label: 'Intro', icon: FileText },
+    { id: 'skills', label: 'Skills', icon: Star },
     { id: 'reveal', label: 'Reveal', icon: Sparkles },
     { id: 'projects', label: 'Projects', icon: FolderOpen },
-    { id: 'skills', label: 'Skills', icon: Star },
     { id: 'contact', label: 'Contact', icon: Mail }
 ];
 

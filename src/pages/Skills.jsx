@@ -24,9 +24,13 @@ const skillCategories = [
     }
 ];
 
-export default function Skills() {
+export default function Skills({ onComplete }) {
     const [snappedCount, setSnappedCount] = useState(0);
     const scrollRef = useRef(null);
+
+    useEffect(() => {
+        if (snappedCount === skillCategories.length && onComplete) onComplete();
+    }, [snappedCount, onComplete]);
 
     useEffect(() => {
         if (scrollRef.current) {

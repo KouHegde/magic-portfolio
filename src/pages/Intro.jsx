@@ -47,13 +47,17 @@ function WavyText({ text }) {
     );
 }
 
-export default function Intro() {
+export default function Intro({ onComplete }) {
     const [currentLine, setCurrentLine] = useState(0);
     const [isTransitioning, setIsTransitioning] = useState(false);
     const [isLocked, setIsLocked] = useState(true);
     const [showModal, setShowModal] = useState(false);
 
     const containerRef = useRef(null);
+
+    useEffect(() => {
+        if (currentLine === introLines.length - 1 && onComplete) onComplete();
+    }, [currentLine, onComplete]);
 
     useEffect(() => {
         const timer = setTimeout(() => setIsLocked(false), 3000);

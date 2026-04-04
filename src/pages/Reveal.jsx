@@ -68,20 +68,23 @@ function MagicalSparks({ activeId }) {
     );
 }
 
-export default function Reveal() {
+export default function Reveal({ onComplete }) {
     const [deck, setDeck] = useState([0, 1, 2]);
     const [fastShufflingCard, setFastShufflingCard] = useState(null);
     const [isShufflingSequence, setIsShufflingSequence] = useState(false);
     const [sparkId, setSparkId] = useState(0);
+    const [seenCards, setSeenCards] = useState(new Set([0]));
 
     const handleShuffle = () => {
         if (isShufflingSequence) return;
         setIsShufflingSequence(true);
         setSparkId(prev => prev + 1);
 
-        const totalShuffles = 5 + Math.floor(Math.random() * 2);
+        const visualShuffles = 5 + Math.floor(Math.random() * 2);
         const shuffleInterval = 220;
         let count = 0;
+
+        const nextTarget = (deck[0] + 1) % experiences.length;
 
         const doOneShuffle = () => {
             setDeck(currentDeck => {
@@ -93,7 +96,7 @@ export default function Reveal() {
             });
 
             count++;
-            if (count < totalShuffles) {
+            if (count < visualShuffles) {
                 setTimeout(() => {
                     setFastShufflingCard(null);
                     setTimeout(doOneShuffle, 40);
@@ -101,6 +104,17 @@ export default function Reveal() {
             } else {
                 setTimeout(() => {
                     setFastShufflingCard(null);
+                    const finalOrder = [];
+                    for (let i = 0; i < experiences.length; i++) {
+                        finalOrder.push((nextTarget + i) % experiences.length);
+                    }
+                    setDeck(finalOrder);
+                    setSeenCards(prev => {
+                        const updated = new Set(prev);
+                        updated.add(nextTarget);
+                        if (updated.size === experiences.length && onComplete) onComplete();
+                        return updated;
+                    });
                     setIsShufflingSequence(false);
                 }, shuffleInterval);
             }
