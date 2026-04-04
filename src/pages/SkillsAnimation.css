@@ -1,0 +1,183 @@
+.snap-btn {
+    padding: 0.8rem 2rem;
+    background: rgba(226, 192, 68, 0.05);
+    color: var(--color-accent-gold);
+    border: 1px solid var(--color-accent-gold);
+    border-radius: 50px;
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    font-style: italic;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(226, 192, 68, 0.15), inset 0 0 15px rgba(226, 192, 68, 0.1);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    letter-spacing: 2px;
+}
+
+.snap-btn:hover {
+    background: var(--color-accent-gold);
+    color: #000;
+    box-shadow: 0 0 30px rgba(226, 192, 68, 0.6);
+    transform: scale(1.05);
+}
+
+.snap-btn:active {
+    transform: scale(0.95);
+}
+
+/* Explosion Effects */
+.local-explosion-area {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 100;
+}
+
+.flying-skill {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-family: var(--font-sans);
+    color: #fff;
+    white-space: nowrap;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    animation: explodeAndFade 1.6s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes explodeAndFade {
+    0% {
+        transform: translate(-50%, -50%) scale(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    20% {
+        transform: translate(calc(-50% + var(--rand-x)), calc(-50% + var(--rand-y))) scale(1.4) rotate(var(--rand-rot));
+        opacity: 1;
+        color: var(--color-accent-gold);
+        text-shadow: 0 0 20px var(--color-accent-gold);
+    }
+
+    70% {
+        transform: translate(calc(-50% + var(--rand-x)), calc(-50% + var(--rand-y))) scale(1) rotate(calc(var(--rand-rot) / 2));
+        opacity: 1;
+        color: #fff;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    }
+
+    100% {
+        transform: translate(-50%, 80px) scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* Static List Effects */
+.category-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-left: 2px solid var(--color-accent-gold-dim);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    /* Delayed so it appears right as the explosion fades */
+    animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.category-title {
+    color: var(--color-accent-gold);
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(226, 192, 68, 0.1);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.skills-badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.skill-badge {
+    background: rgba(226, 192, 68, 0.05);
+    border: 1px solid rgba(226, 192, 68, 0.2);
+    border-radius: 20px;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    color: #e5e7eb;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.skill-badge:hover {
+    background: rgba(226, 192, 68, 0.15);
+    border: 1px solid var(--color-accent-gold-dim);
+    transform: translateY(-2px);
+    transition: all 0.2s ease;
+    cursor: default;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    70% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.vase-final-text {
+    font-family: var(--font-serif);
+    color: var(--color-accent-gold);
+    letter-spacing: 2px;
+    font-size: 1.1rem;
+    padding: 0.8rem 2rem;
+    border-top: 1px solid var(--color-accent-gold-dim);
+    border-bottom: 1px solid var(--color-accent-gold-dim);
+}
+
+.tracking-in {
+    animation: slideUpFade 1s ease forwards;
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

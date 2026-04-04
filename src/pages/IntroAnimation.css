@@ -1,0 +1,136 @@
+/* MASSIVE GLOBAL SMOKE TRIGGERED DURING TRANSITION */
+.global-transition-smoke {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9998;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle at 50% 50%, rgba(226, 192, 68, 0.4) 0%, transparent 60%),
+        url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)"/></svg>');
+    background-color: transparent;
+    mix-blend-mode: screen;
+    animation: slowSmokeSweep 3s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes slowSmokeSweep {
+    0% {
+        opacity: 0;
+        filter: blur(5px) contrast(150%);
+        transform: scale(1) translateY(30px);
+    }
+
+    50% {
+        opacity: 0.6;
+        filter: blur(15px) contrast(130%);
+        transform: scale(1.1) translateY(0px);
+    }
+
+    100% {
+        opacity: 0;
+        filter: blur(40px) contrast(100%);
+        transform: scale(1.4) translateY(-100px);
+    }
+}
+
+/* MIND READER PROJECTION EASTER EGG */
+.mind-reader-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(11, 12, 16, 0.6);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.mind-reader-modal.visible {
+    opacity: 1;
+}
+
+.mind-reader-content {
+    background: rgba(13, 14, 20, 0.95);
+    border: 1px solid var(--color-accent-gold);
+    padding: 3.5rem 4rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 0 50px rgba(226, 192, 68, 0.2), inset 0 0 20px rgba(226, 192, 68, 0.1);
+    transform: translateY(20px) scale(0.95);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mind-reader-modal.visible .mind-reader-content {
+    transform: translateY(0) scale(1);
+}
+
+.eye-icon {
+    font-size: 4rem;
+    animation: floatEye 3s ease-in-out infinite;
+    display: inline-block;
+    filter: drop-shadow(0 0 10px var(--color-accent-gold));
+    margin-bottom: 1rem;
+}
+
+@keyframes floatEye {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Hide native scrollbar to enforce the magic slide presentation feel */
+.intro-hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.intro-hide-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+/* WAVY DISCLAIMER TEXT ANIMATION */
+.wavy-text-container {
+    display: inline-block;
+    white-space: pre-wrap;
+    color: var(--color-accent-gold-dim);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+}
+
+.wavy-text-container span {
+    display: inline-block;
+    animation: waveChar 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes waveChar {
+
+    0%,
+    100% {
+        transform: translateY(0);
+        text-shadow: 0 0 0 transparent;
+    }
+
+    50% {
+        transform: translateY(-4px);
+        text-shadow: 0 0 10px rgba(226, 192, 68, 0.8);
+        color: #fff;
+    }
+}
