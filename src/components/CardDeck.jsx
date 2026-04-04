@@ -20,8 +20,16 @@ export default function CardDeck({ activePage, PageContent, onNext, onPrev, onCo
                 setInternalPageContent(() => PageContent);
                 setPageTransition(false);
             }, 300);
+        } else if (isFlipped && !pageTransition) {
+            setPageTransition(true);
+            setTimeout(() => {
+                setInternalPageContent(() => PageContent);
+                setPageTransition(false);
+            }, 300);
         } else if (!isFlipped) {
             setInternalPageContent(() => PageContent);
+            setCurtainOpen(true);
+            setTimeout(() => setIsFlipped(true), 100);
         }
     }, [activePage, PageContent]);
 
