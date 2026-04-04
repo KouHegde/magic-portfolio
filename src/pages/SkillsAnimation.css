@@ -181,3 +181,33 @@
         transform: translateY(0);
     }
 }
+
+@media (max-width: 768px) {
+    .snap-btn {
+        font-size: 0.95rem;
+        padding: 0.6rem 1.5rem;
+    }
+
+    .category-title {
+        font-size: 1.1rem;
+    }
+
+    .category-card {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .skill-badge {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.7rem;
+    }
+
+    .skills-badge-container {
+        gap: 0.5rem;
+    }
+
+    .vase-final-text {
+        font-size: 0.9rem;
+        padding: 0.6rem 1.2rem;
+    }
+}

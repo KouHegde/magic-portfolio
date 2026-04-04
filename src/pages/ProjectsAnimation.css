@@ -357,3 +357,20 @@
     box-shadow: 0 0 30px var(--color-accent-gold);
     transform: translateY(-2px);
 }
+
+@media (max-width: 768px) {
+    .project-page-container {
+        padding: 0 0.5rem;
+    }
+
+    .wand-instruction {
+        font-size: 0.65rem;
+        letter-spacing: 3px;
+    }
+
+    .project-btn-glow {
+        font-size: 0.85rem;
+        padding: 0.8rem 1.5rem;
+        letter-spacing: 2px;
+    }
+}

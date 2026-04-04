@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const homeLinks = [
     { id: 'intro', label: 'The Archive', desc: 'Who I am and what I do' },
@@ -13,8 +13,12 @@ export default function CardDeck({ activePage, PageContent, onNext, onPrev, onCo
     const [curtainOpen, setCurtainOpen] = useState(false);
     const [internalPageContent, setInternalPageContent] = useState(() => PageContent);
     const [pageTransition, setPageTransition] = useState(false);
+    const prevPageRef = useRef(activePage);
 
     useEffect(() => {
+        if (prevPageRef.current === activePage) return;
+        prevPageRef.current = activePage;
+
         if (isFlipped && pageTransition) {
             setTimeout(() => {
                 setInternalPageContent(() => PageContent);

@@ -989,3 +989,172 @@ body {
   color: #d1d5db;
   border-color: rgba(255, 255, 255, 0.3);
 }
+
+/* ═══════════════════════════════════════════
+   MOBILE RESPONSIVE
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .main-content {
+    padding: 0.5rem;
+    width: 100%;
+    height: 100vh;
+  }
+
+  .card-container-wrapper {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    padding: 0.25rem;
+  }
+
+  .card-face {
+    border-radius: 8px;
+  }
+
+  /* Homepage */
+  .home-content {
+    padding: 1.5rem 1.2rem 1rem;
+  }
+
+  .home-title {
+    font-size: 2rem;
+  }
+
+  .home-welcome {
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+  }
+
+  .home-role {
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+  }
+
+  .home-header {
+    margin-bottom: 1rem;
+  }
+
+  .home-nav {
+    gap: 0.4rem;
+  }
+
+  .home-nav-item {
+    padding: 0.7rem 1rem;
+    gap: 0.6rem;
+  }
+
+  .home-nav-label {
+    font-size: 0.95rem;
+    min-width: 90px;
+  }
+
+  .home-nav-desc {
+    font-size: 0.6rem;
+  }
+
+  .home-footer {
+    margin-top: 0.8rem;
+    font-size: 0.5rem;
+  }
+
+  /* Curtains */
+  .curtain-full {
+    width: 54%;
+  }
+
+  .curtain-valance {
+    height: 28px;
+  }
+
+  .prompt-icon {
+    font-size: 2.2rem;
+  }
+
+  .prompt-text {
+    font-size: 0.9rem;
+  }
+
+  /* Card back — page content */
+  .card-back {
+    padding: 1rem 1rem 0.5rem;
+  }
+
+  .page-content {
+    padding-right: 5px;
+  }
+
+  .page-nav-controls {
+    padding: 0.5rem 0.8rem;
+    gap: 0.3rem;
+  }
+
+  .nav-btn {
+    font-size: 0.65rem;
+    padding: 0.4rem 0.6rem;
+    letter-spacing: 1px;
+  }
+
+  /* Magical letter modal */
+  .letter-modal {
+    width: 90%;
+    max-width: 340px;
+    padding: 2rem 1.5rem;
+  }
+
+  .letter-title {
+    font-size: 1.1rem;
+  }
+
+  .letter-body {
+    font-size: 0.8rem;
+  }
+
+  .letter-actions {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .letter-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  .home-title {
+    font-size: 1.7rem;
+    letter-spacing: 1px;
+  }
+
+  .home-content {
+    padding: 1.2rem 0.8rem 0.8rem;
+  }
+
+  .home-nav-item {
+    padding: 0.6rem 0.8rem;
+  }
+
+  .home-nav-desc {
+    display: none;
+  }
+
+  .home-nav-label {
+    font-size: 0.85rem;
+  }
+
+  .prompt-text {
+    font-size: 0.8rem;
+  }
+
+  .prompt-icon {
+    font-size: 1.8rem;
+  }
+}

@@ -134,3 +134,18 @@
         color: #fff;
     }
 }
+
+@media (max-width: 768px) {
+    .mind-reader-content {
+        padding: 2rem 1.5rem;
+        margin: 0 1rem;
+    }
+
+    .eye-icon {
+        font-size: 2.5rem;
+    }
+
+    .wavy-text-container {
+        font-size: 0.8rem;
+    }
+}
