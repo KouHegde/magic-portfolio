@@ -91,9 +91,11 @@ export default function Projects({ onComplete }) {
     const [isCasting, setIsCasting] = useState(false);
     const [sparkKey, setSparkKey] = useState(0);
     const [seenProjects, setSeenProjects] = useState(new Set());
+    const [hintVisible, setHintVisible] = useState(true);
 
     const handleClick = () => {
         if (isCasting) return;
+        setHintVisible(false);
 
         if (wandState === 'ready') {
             setIsCasting(true);
@@ -128,10 +130,16 @@ export default function Projects({ onComplete }) {
     return (
         <div className="project-page-container" onClick={handleClick}>
 
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1rem', marginTop: '1rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '0.5rem', marginTop: '1rem' }}>
                 <div className="wand-instruction">
                     {isRevealed ? '✦ CLICK TO CONJURE NEXT ARTIFACT ✦' : '✦ CLICK TO CAST THE SPELL ✦'}
                 </div>
+                {hintVisible && (
+                    <div className="page-hint-banner" style={{ marginTop: '0.5rem' }}>
+                        <span className="hint-hand">👆</span>
+                        <span>Click anywhere to wave the wand and reveal each project</span>
+                    </div>
+                )}
             </div>
 
             <div style={{ flex: 1, position: 'relative', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

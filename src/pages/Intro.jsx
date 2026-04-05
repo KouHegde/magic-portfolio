@@ -52,6 +52,7 @@ export default function Intro({ onComplete }) {
     const [isTransitioning, setIsTransitioning] = useState(false);
     const [isLocked, setIsLocked] = useState(true);
     const [showModal, setShowModal] = useState(false);
+    const [hintVisible, setHintVisible] = useState(true);
 
     const containerRef = useRef(null);
 
@@ -122,6 +123,7 @@ export default function Intro({ onComplete }) {
     }, [currentLine, isTransitioning, isLocked, showModal]);
 
     const performTransition = (newLine) => {
+        setHintVisible(false);
         setIsTransitioning(true);
 
         // At the absolute peak of the smoke thickness (1.2s), swap the text to the next state!
@@ -155,9 +157,12 @@ export default function Intro({ onComplete }) {
                 <h2 className="page-title" style={{ margin: 0 }}>The Archive</h2>
             </div>
 
-            <div style={{ marginBottom: '2rem', paddingLeft: '2px', flexShrink: 0 }}>
-                <WavyText text="✽ Please slide or scroll down to unveil the contents ✽" />
-            </div>
+            {hintVisible && (
+                <div className="page-hint-banner">
+                    <span className="hint-hand">👆</span>
+                    <span>Scroll down or click below to read each passage</span>
+                </div>
+            )}
 
             <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 

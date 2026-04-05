@@ -26,6 +26,7 @@ const skillCategories = [
 
 export default function Skills({ onComplete }) {
     const [snappedCount, setSnappedCount] = useState(0);
+    const [hintVisible, setHintVisible] = useState(true);
     const scrollRef = useRef(null);
 
     useEffect(() => {
@@ -65,6 +66,7 @@ export default function Skills({ onComplete }) {
     }, []);
 
     const handleSnap = () => {
+        setHintVisible(false);
         if (snappedCount < structuredCategories.length) {
             setSnappedCount(prev => prev + 1);
         }
@@ -75,8 +77,14 @@ export default function Skills({ onComplete }) {
             <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
                 <h2 className="page-title" style={{ marginBottom: '0.5rem', fontSize: '2.4rem' }}>Disciplines of the Void</h2>
                 <p style={{ color: '#9ca3af', fontSize: '0.95rem', fontStyle: 'italic', margin: 0, opacity: 0.8 }}>
-                    Snap your fingers one after another to summon the disciplines...
+                    Tap the button below to summon each discipline...
                 </p>
+                {hintVisible && (
+                    <div className="page-hint-banner" style={{ marginTop: '0.8rem' }}>
+                        <span className="hint-hand">👇</span>
+                        <span>Click the "Snap" button repeatedly to reveal all skills</span>
+                    </div>
+                )}
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>

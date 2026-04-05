@@ -74,9 +74,11 @@ export default function Reveal({ onComplete }) {
     const [isShufflingSequence, setIsShufflingSequence] = useState(false);
     const [sparkId, setSparkId] = useState(0);
     const [seenCards, setSeenCards] = useState(new Set([0]));
+    const [hintVisible, setHintVisible] = useState(true);
 
     const handleShuffle = () => {
         if (isShufflingSequence) return;
+        setHintVisible(false);
         setIsShufflingSequence(true);
         setSparkId(prev => prev + 1);
 
@@ -133,9 +135,15 @@ export default function Reveal({ onComplete }) {
     return (
         <div style={{ height: '100%', padding: '0 1rem', display: 'flex', flexDirection: 'column' }} onClick={handleShuffle}>
             <h2 className="page-title" style={{ marginBottom: '0.5rem', marginTop: '0.5rem' }}>Backend Magician</h2>
-            <p style={{ color: 'var(--color-accent-gold)', fontStyle: 'italic', marginBottom: '2.0rem', fontSize: '0.95rem', textAlign: 'center' }}>
+            <p style={{ color: 'var(--color-accent-gold)', fontStyle: 'italic', marginBottom: '0.5rem', fontSize: '0.95rem', textAlign: 'center' }}>
                 A grimoire of my professional conjurations.
             </p>
+            {hintVisible && (
+                <div className="page-hint-banner" style={{ marginBottom: '1rem' }}>
+                    <span className="hint-hand">👆</span>
+                    <span>Click anywhere on the card to shuffle to the next experience</span>
+                </div>
+            )}
 
             <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', position: 'relative' }}>
 
