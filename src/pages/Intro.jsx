@@ -23,13 +23,35 @@ function TransitionSmoke({ active }) {
     );
 }
 
-function MindReaderModal({ active }) {
+function MindReaderModal({ active, onDismiss }) {
     return createPortal(
-        <div className={`mind-reader-modal ${active ? 'visible' : ''}`}>
-            <div className="mind-reader-content">
+        <div
+            className={`mind-reader-modal ${active ? 'visible' : ''}`}
+            onClick={active ? onDismiss : undefined}
+        >
+            <div className="mind-reader-content" onClick={(e) => e.stopPropagation()}>
                 <div className="eye-icon">👁️</div>
                 <h3 style={{ margin: '1rem 0 0.5rem', color: 'var(--color-accent-gold)', fontFamily: 'var(--font-serif)', fontSize: '2rem' }}>I am reading your mind...</h3>
                 <p style={{ color: '#aaa', fontSize: '1rem', letterSpacing: '1px' }}>Please absorb the current passage fully before proceeding.</p>
+                <button
+                    onClick={onDismiss}
+                    style={{
+                        marginTop: '1.5rem',
+                        background: 'none',
+                        border: '1px solid var(--color-accent-gold-dim)',
+                        color: 'var(--color-accent-gold)',
+                        padding: '0.5rem 1.5rem',
+                        borderRadius: '4px',
+                        fontSize: '0.7rem',
+                        letterSpacing: '2px',
+                        textTransform: 'uppercase',
+                        cursor: 'pointer',
+                        fontFamily: 'var(--font-sans)',
+                        transition: 'all 0.3s ease',
+                    }}
+                >
+                    Understood
+                </button>
             </div>
         </div>,
         document.body
@@ -56,6 +78,7 @@ export default function Intro({ onComplete }) {
     const [hintVisible, setHintVisible] = useState(true);
 
     const containerRef = useRef(null);
+    const modalTimerRef = useRef(null);
 
     useEffect(() => {
         if (currentLine === introLines.length - 1 && onComplete) onComplete();
@@ -66,18 +89,34 @@ export default function Intro({ onComplete }) {
         return () => clearTimeout(timer);
     }, []);
 
+    const dismissModal = () => {
+        if (modalTimerRef.current) clearTimeout(modalTimerRef.current);
+        modalTimerRef.current = null;
+        setShowModal(false);
+    };
+
     const triggerModal = () => {
         if (!showModal) {
             setShowModal(true);
-            setTimeout(() => setShowModal(false), 2500);
+            if (modalTimerRef.current) clearTimeout(modalTimerRef.current);
+            modalTimerRef.current = setTimeout(() => {
+                setShowModal(false);
+                modalTimerRef.current = null;
+            }, 2500);
         }
     };
+
+    useEffect(() => {
+        return () => {
+            if (modalTimerRef.current) clearTimeout(modalTimerRef.current);
+        };
+    }, []);
 
     useEffect(() => {
         let accumulatedDelta = 0;
 
         const handleSlideAttempt = (delta) => {
-            if (isTransitioning) return;
+            if (isTransitioning || showModal) return;
 
             accumulatedDelta += delta;
 
@@ -142,7 +181,7 @@ export default function Intro({ onComplete }) {
     };
 
     const handleContainerClick = () => {
-        if (isTransitioning) return;
+        if (isTransitioning || showModal) return;
         if (currentLine === introLines.length - 1) return;
         if (isLocked) { triggerModal(); return; }
         performTransition(currentLine + 1);
@@ -152,7 +191,7 @@ export default function Intro({ onComplete }) {
         <div ref={containerRef} style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden', padding: '0 2rem' }}>
 
             <TransitionSmoke active={isTransitioning} />
-            <MindReaderModal active={showModal} />
+            <MindReaderModal active={showModal} onDismiss={dismissModal} />
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem', flexShrink: 0 }}>
                 <h2 className="page-title" style={{ margin: 0 }}>The Archive</h2>
