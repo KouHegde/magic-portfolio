@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import SortingHat from '../components/SortingHat';
 import './IntroAnimation.css';
 
 const introLines = [
@@ -158,10 +159,7 @@ export default function Intro({ onComplete }) {
             </div>
 
             {hintVisible && (
-                <div className="page-hint-banner">
-                    <span className="hint-hand">👆</span>
-                    <span>Scroll down or click below to read each passage</span>
-                </div>
+                <SortingHat message="Scroll down or click below to read each passage, young one..." />
             )}
 
             <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

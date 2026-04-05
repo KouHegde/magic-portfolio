@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SortingHat from '../components/SortingHat';
 import './RevealAnimation.css';
 
 const experiences = [
@@ -139,9 +140,8 @@ export default function Reveal({ onComplete }) {
                 A grimoire of my professional conjurations.
             </p>
             {hintVisible && (
-                <div className="page-hint-banner" style={{ marginBottom: '1rem' }}>
-                    <span className="hint-hand">👆</span>
-                    <span>Click anywhere on the card to shuffle to the next experience</span>
+                <div style={{ marginBottom: '1rem' }}>
+                    <SortingHat message="Click anywhere to shuffle the deck and reveal the next experience..." />
                 </div>
             )}
 

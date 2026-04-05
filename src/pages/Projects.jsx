@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SortingHat from '../components/SortingHat';
 import './ProjectsAnimation.css';
 
 const projectsData = [
@@ -135,9 +136,8 @@ export default function Projects({ onComplete }) {
                     {isRevealed ? '✦ CLICK TO CONJURE NEXT ARTIFACT ✦' : '✦ CLICK TO CAST THE SPELL ✦'}
                 </div>
                 {hintVisible && (
-                    <div className="page-hint-banner" style={{ marginTop: '0.5rem' }}>
-                        <span className="hint-hand">👆</span>
-                        <span>Click anywhere to wave the wand and reveal each project</span>
+                    <div style={{ marginTop: '0.5rem' }}>
+                        <SortingHat message="Click anywhere to wave the wand and reveal each project..." />
                     </div>
                 )}
             </div>

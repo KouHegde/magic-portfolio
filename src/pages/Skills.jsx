@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
+import SortingHat from '../components/SortingHat';
 import './SkillsAnimation.css';
 
 const skillCategories = [
@@ -80,9 +81,8 @@ export default function Skills({ onComplete }) {
                     Tap the button below to summon each discipline...
                 </p>
                 {hintVisible && (
-                    <div className="page-hint-banner" style={{ marginTop: '0.8rem' }}>
-                        <span className="hint-hand">👇</span>
-                        <span>Click the "Snap" button repeatedly to reveal all skills</span>
+                    <div style={{ marginTop: '0.8rem' }}>
+                        <SortingHat message="Click the Snap button to summon each discipline from the void..." />
                     </div>
                 )}
             </div>
