@@ -812,6 +812,7 @@ body {
   border-top: 1px solid var(--color-border);
   padding-top: 2rem;
   animation: fadeIn 0.8s ease 0.8s both;
+  flex-shrink: 0;
 }
 
 .nav-btn {
@@ -1116,13 +1117,15 @@ body {
   }
 
   .page-nav-controls {
-    padding: 0.5rem 0.8rem;
+    margin-top: 0.8rem;
+    padding: 0.6rem 0;
+    padding-top: 0.8rem;
     gap: 0.3rem;
   }
 
   .nav-btn {
     font-size: 0.65rem;
-    padding: 0.4rem 0.6rem;
+    padding: 0.5rem 0.7rem;
     letter-spacing: 1px;
   }
 
@@ -1179,6 +1182,18 @@ body {
 
   .prompt-icon {
     font-size: 1.8rem;
+  }
+
+  .page-nav-controls {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+  }
+
+  .nav-btn {
+    font-size: 0.6rem;
+    padding: 0.4rem 0.5rem;
+    letter-spacing: 0.5px;
+    gap: 0.25rem;
   }
 
   .sorting-hat-wrapper {
